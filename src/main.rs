@@ -1,24 +1,17 @@
-use eframe::egui;
+mod applab;
 
-fn main() -> eframe::Result {
-    // Our application state:
-    let mut name = "Arthur".to_owned();
-    let mut age = 42;
-
-    let options = eframe::NativeOptions::default();
-    eframe::run_simple_native("My egui App", options, move |ctx, _frame| {
-        egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("My egui Application");
-            ui.horizontal(|ui| {
-                let name_label = ui.label("Your name: ");
-                ui.text_edit_singleline(&mut name)
-                    .labelled_by(name_label.id);
-            });
-            ui.add(egui::Slider::new(&mut age, 0..=120).text("age"));
-            if ui.button("Increment").clicked() {
-                age += 1;
-            }
-            ui.label(format!("Hello '{name}', age {age}"));
-        });
-    })
+fn main() -> applab::errors::Result {
+    let hight_res = applab::people::attributes::height::Height::new(5, 5);
+    match hight_res {
+        Ok(h) => {
+            let height: applab::people::attributes::height::Height = h;
+            let user = applab::people::Person::new("McLOVIN", "", height);
+            applab::TestApp::new(user).launch()
+        }
+        Err(e) => Err(applab::errors::AppLabError::from(
+            applab::people::errors::PeopleError::from(
+                applab::people::attributes::errors::AttributeError::from(e),
+            ),
+        )),
+    }
 }
