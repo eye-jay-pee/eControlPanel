@@ -31,11 +31,13 @@ impl fmt::Display for Person {
     }
 }
 impl HasControlPanel for Person {
-    fn update_readonly(&mut self, ui: &mut egui::Ui) {
-        ui.label(" world");
+    fn update_readonly(&self, ui: &mut egui::Ui) {
+        ui.label(self.first_name.clone());
+        ui.label(self.last_name.clone());
     }
     fn update(&mut self, ui: &mut egui::Ui) {
-        ui.heading(" world");
+        ui.label(self.first_name.clone());
+        ui.label(self.last_name.clone());
     }
 }
 

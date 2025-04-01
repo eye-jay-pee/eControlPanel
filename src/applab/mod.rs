@@ -5,7 +5,7 @@ pub mod errors;
 pub mod people;
 
 pub trait HasControlPanel: std::fmt::Display {
-    fn update_readonly(&mut self, ui: &mut egui::Ui);
+    fn update_readonly(&self, ui: &mut egui::Ui);
     fn update(&mut self, ui: &mut egui::Ui);
 }
 
@@ -31,11 +31,11 @@ impl<T: HasControlPanel> TestApp<T> {
 impl<T: HasControlPanel> eframe::App for TestApp<T> {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.heading("my data:");
+            ui.heading("Editable:");
             self.data.update(ui);
             ui.separator();
-            ui.heading("my data:");
-            self.data.update(ui);
+            ui.heading("Readonly:");
+            self.data.update_readonly(ui);
         });
     }
 }

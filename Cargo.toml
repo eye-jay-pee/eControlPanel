@@ -1,5 +1,5 @@
 [package]
-name = "simple_native"
+name = "econtrolpanel"
 version = "0.1.0"
 edition = "2021"
 
